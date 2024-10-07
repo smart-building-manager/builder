@@ -1,4 +1,4 @@
-image: "ghcr.io/home-assistant/{arch}-builder"
+image: "ghcr.io/my-smart-homes/{arch}-builder"
 build_from:
   aarch64: "ghcr.io/home-assistant/aarch64-base:3.20"
   armv7: "ghcr.io/home-assistant/armv7-base:3.20"
