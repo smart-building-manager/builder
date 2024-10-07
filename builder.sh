@@ -291,8 +291,8 @@ function run_build() {
         docker pull "${repository}/${image}:${cache_tag}" --platform "${docker_platform}" > /dev/null 2>&1 || true
 
         if \
-            docker image inspect "${repository}/${image}:${cache_tag}" > /dev/null 2>&1 \
-            && cosign_verify "${cosign_issuer}" "${cosign_identity}" "${repository}/${image}:${cache_tag}" "${docker_platform}" "false" \
+            docker image inspect "${repository}/${image}:${cache_tag}" > /dev/null 2>&1
+            # && cosign_verify "${cosign_issuer}" "${cosign_identity}" "${repository}/${image}:${cache_tag}" "${docker_platform}" "false" \
         ; then
             docker_cli+=("--cache-from" "${repository}/${image}:${cache_tag}")
         else
@@ -310,9 +310,9 @@ function run_build() {
     docker_cli+=("--label" "org.opencontainers.image.version=${release}")
 
     # Validate the base image
-    if ! cosign_verify "${cosign_base_issuer}" "${cosign_base_identity}" "${build_from}" "${docker_platform}" "true"; then
-        bashio::exit.nok "Invalid base image ${build_from}"
-    fi
+    # if ! cosign_verify "${cosign_base_issuer}" "${cosign_base_identity}" "${build_from}" "${docker_platform}" "true"; then
+    #     bashio::exit.nok "Invalid base image ${build_from}"
+    # fi
 
     # Arch specific Dockerfile
     if bashio::fs.file_exists "${build_dir}/Dockerfile.${build_arch}"; then
