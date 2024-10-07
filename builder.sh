@@ -291,8 +291,7 @@ function run_build() {
         docker pull "${repository}/${image}:${cache_tag}" --platform "${docker_platform}" > /dev/null 2>&1 || true
 
         if \
-            docker image inspect "${repository}/${image}:${cache_tag}" > /dev/null 2>&1
-            # && cosign_verify "${cosign_issuer}" "${cosign_identity}" "${repository}/${image}:${cache_tag}" "${docker_platform}" "false" \
+            docker image inspect "${repository}/${image}:${cache_tag}" > /dev/null 2>&1 \
         ; then
             docker_cli+=("--cache-from" "${repository}/${image}:${cache_tag}")
         else
