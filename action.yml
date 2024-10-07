@@ -12,10 +12,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install Cosign
-      uses: sigstore/cosign-installer@v3.6.0
-      with:
-        cosign-release: "v2.4.0"
+    # - name: Install Cosign
+    #   uses: sigstore/cosign-installer@v3.6.0
+    #   with:
+    #     cosign-release: "v2.4.0"
 
     - shell: bash
       id: version
@@ -29,16 +29,16 @@ runs:
     - shell: bash
       if: ${{ inputs.pull == 'true' }}
       run: |
-        docker pull ghcr.io/my-smart-homes/amd64-builder:${{ steps.version.outputs.version }}
-        cosign verify \
-          --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-          --certificate-identity-regexp https://github.com/my-smart-homes/builder/.* \
-          ghcr.io/my-smart-homes/amd64-builder:${{ steps.version.outputs.version }}
+        docker pull ghcr.io/home-assistant/amd64-builder:${{ steps.version.outputs.version }}
+        # cosign verify \
+        #   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+        #   --certificate-identity-regexp https://github.com/my-smart-homes/builder/.* \
+        #   ghcr.io/my-smart-homes/amd64-builder:${{ steps.version.outputs.version }}
 
     - shell: bash
       id: builder
       run: |
-        builder=$(docker images ghcr.io/my-smart-homes/amd64-builder:${{ steps.version.outputs.version }} -q)
+        builder=$(docker images ghcr.io/home-assistant/amd64-builder:${{ steps.version.outputs.version }} -q)
         echo "id=$builder" >> "$GITHUB_OUTPUT"
 
     - shell: bash
@@ -52,7 +52,7 @@ runs:
             -v ~/.docker:/root/.docker \
             -v ${{ github.workspace }}:/data \
             --env-file "${{ github.action_path }}/env_file" \
-            ghcr.io/my-smart-homes/amd64-builder:${{ steps.version.outputs.version }} \
+            ghcr.io/home-assistant/amd64-builder:${{ steps.version.outputs.version }} \
             ${{ inputs.args }}
 
     - shell: bash
