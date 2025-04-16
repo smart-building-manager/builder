@@ -64,7 +64,7 @@ declare -A BUILD_MACHINE=(
 function print_help() {
     cat << EOF
 Hass.io build-env for ecosystem:
-docker run --rm homeassistant/{arch}-builder:latest [options]
+docker run --rm smart-building-manager/{arch}-builder:latest [options]
 
 Options:
   -h, --help
@@ -528,7 +528,7 @@ function build_addon() {
     # Set defaults build things
     if [ -z "$build_from" ]; then
         bashio::log.info "No build information or from not provided. Using default base image."
-        build_from="homeassistant/${build_arch}-base:latest"
+        build_from="smart-building-manager/${build_arch}-base:latest"
     fi
 
     # Additional build args
