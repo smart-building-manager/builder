@@ -53,7 +53,7 @@ jobs:
 
       - name: Publish ${{ matrix.architecture }} builder
         # uses: home-assistant/builder@2024.08.2
-        uses: my-smart-homes/builder@master
+        uses: smart-building-manager/builder@master
         with:
           # args: |
           #   --${{ matrix.architecture }} \
